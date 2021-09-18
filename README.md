@@ -34,6 +34,7 @@ This script takes a single input folder, and requires that all python files insi
 - Enums
 
 If a dataclass contains an enum, the enum definition must be in the same folder also. 
+This script also supports nullable types (see `MyNullableInterface` in the section below).
 
 ### Example
 
@@ -52,6 +53,10 @@ class MyEnum(Enum):
 @dataclass(frozen=True)
 class MyInterface:
     field: MyEnum
+    
+@dataclass(frozen=True)
+class MyNullableInterface:
+    field: MyInterface = None
 
 ```
 
@@ -75,6 +80,9 @@ export interface MyInterface {
     field: MyEnum;
 }
 
+export interface MyNullableInterface {
+    field?: MyInterface;
+}
 ```
 
 ## Supported Type Mappings

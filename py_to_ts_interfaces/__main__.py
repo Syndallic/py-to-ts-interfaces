@@ -1,111 +1,11 @@
 import os
 import sys
-from typing import List, Union
+from typing import Union
 import argparse
 
-python_to_typescript_type_map = {
-    "str": "string",
-    "int": "number",
-    "float": "number",
-    "complex": "number",
-    "bool": "bool",
-    "List[int]": "Array[number]",
-    "List[str]": "Array[string]"
-}
-
-
-def python_to_typescript_type(python_type: str) -> str:
-    """
-    Map python type to an equivalent typescript type.
-
-    :param python_type: A python type like 'str' or 'int'.
-    :return: An equivalent typescript type. If there is no known mapping for the input, then it is returned as-is for
-    enum support.
-    """
-    try:
-        return python_to_typescript_type_map[python_type]
-    except KeyError:
-        # This should mean it is an enum
-        return python_type
-
-
-class InterfaceField:
-    """Represent a dataclass field."""
-    name: str
-    python_type: str
-
-    def __init__(self, line: str):
-        self.name, self.python_type = line.strip().split(": ")
-
-    def get_typescript(self) -> str:
-        """Return the field in typescript syntax (including indentation)."""
-        return "    {0}: {1};".format(self.name, python_to_typescript_type(self.python_type))
-
-
-class InterfaceDefinition:
-    """Represent a python dataclass/typescript interface."""
-    name: str
-    fields: List[InterfaceField]
-
-    def __init__(self, definition: List[str]):
-        self.name = definition[0].removeprefix("class ").strip(":")
-        self.fields = [InterfaceField(line) for line in definition[1:]]
-
-    def get_typescript(self) -> str:
-        """Return the entire interface in typescript syntax (including indentation)."""
-        typescript_string = "export interface {0} {{\n".format(self.name)
-        for field in self.fields:
-            typescript_string += "{}\n".format(field.get_typescript())
-        typescript_string += "}"
-        return typescript_string
-
-
-class EnumElement:
-    """Represent one element of an enum."""
-    name: str
-    value: str
-
-    def __init__(self, line: str):
-        name_and_value = line.strip().split(" = ")
-        self.name = name_and_value[0]
-        self.value = name_and_value[1].strip("\"")
-
-    def get_typescript(self) -> str:
-        """Return the element in typescript syntax (including indentation)."""
-        return "    {0} = \'{1}\',".format(self.name, self.value)
-
-
-class EnumDefinition:
-    """Represent a python/typescript enum."""
-    name: str
-    elements: List[EnumElement]
-
-    def __init__(self, definition: List[str]):
-        self.name = definition[0].removeprefix("class ").removesuffix("(Enum):")
-        self.elements = [EnumElement(line) for line in definition[1:]]
-
-    def get_typescript(self) -> str:
-        """Return the enum in typescript syntax (including indentation)."""
-        typescript_string = "enum {0} {{\n".format(self.name)
-        for element in self.elements:
-            typescript_string += "{}\n".format(element.get_typescript())
-        typescript_string += "}"
-        return typescript_string
-
-
-def read_file(file_path: str) -> str:
-    """Read content of file provided."""
-    with open(file_path, "r", encoding="utf-8") as reader:
-        return reader.read()
-
-
-def write_file(to_write: str, file_path: str) -> None:
-    """Write input string to file."""
-    folder_path = os.path.dirname(file_path)
-    if folder_path and not os.path.isdir(folder_path):
-        os.makedirs(folder_path)
-    with open(file_path, "w+", encoding="utf-8") as writer:
-        writer.write(to_write)
+from py_to_ts_interfaces.enums import EnumDefinition
+from py_to_ts_interfaces.file_io import write_file, read_file
+from py_to_ts_interfaces.interfaces import InterfaceDefinition
 
 
 def python_to_typescript_file(python_code: str) -> str:

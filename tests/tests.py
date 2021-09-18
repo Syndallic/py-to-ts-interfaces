@@ -16,6 +16,10 @@ class MyEnum(Enum):
 class MyInterface:
     field: MyEnum
     
+@dataclass(frozen=True)
+class MyNullableInterface:
+    field: MyInterface = None
+    
 """
 
 TYPESCRIPT_DEFINITIONS = """/* eslint-disable no-unused-vars */
@@ -27,6 +31,10 @@ enum MyEnum {
 
 export interface MyInterface {
     field: MyEnum;
+}
+
+export interface MyNullableInterface {
+    field?: MyInterface;
 }
 """
 
