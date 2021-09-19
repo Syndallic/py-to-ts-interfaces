@@ -69,7 +69,7 @@ $ py-ts-interfaces example_folder output_folder
 
 3. The resulting file will look like this:
 ```typescript
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 enum MyEnum {
     FIRST = 'Number One',

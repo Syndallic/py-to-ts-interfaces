@@ -22,7 +22,7 @@ class MyNullableInterface:
     
 """
 
-TYPESCRIPT_DEFINITIONS = """/* eslint-disable no-unused-vars */
+TYPESCRIPT_DEFINITIONS = """/* eslint-disable @typescript-eslint/no-unused-vars */
 
 enum MyEnum {
     FIRST = 'Number One',
