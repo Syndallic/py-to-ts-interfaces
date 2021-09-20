@@ -43,6 +43,7 @@ This script also supports nullable types (see `MyNullableInterface` in the secti
 ```python
 from dataclasses import dataclass
 from enum import Enum
+from typing import Union
 
 
 class MyEnum(Enum):
@@ -56,7 +57,7 @@ class MyInterface:
     
 @dataclass(frozen=True)
 class MyNullableInterface:
-    field: MyInterface = None
+    field: Union[MyInterface, None] = None
 
 ```
 

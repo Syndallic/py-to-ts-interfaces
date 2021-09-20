@@ -5,6 +5,7 @@ from py_to_ts_interfaces.__main__ import python_to_typescript_folder
 
 PYTHON_DEFINITIONS = """from dataclasses import dataclass
 from enum import Enum
+from typing import Union
 
 
 class MyEnum(Enum):
@@ -18,7 +19,12 @@ class MyInterface:
     
 @dataclass(frozen=True)
 class MyNullableInterface:
-    field: MyInterface = None
+    field: Union[MyInterface, None] = None
+    
+@dataclass(frozen=True)
+class MyInterface2:
+    strange_type: Union[List[int], None]
+    other_type: List[str]
     
 """
 
@@ -35,6 +41,11 @@ export interface MyInterface {
 
 export interface MyNullableInterface {
     field?: MyInterface;
+}
+
+export interface MyInterface2 {
+    strange_type: Array[number];
+    other_type: Array[string];
 }
 """
 

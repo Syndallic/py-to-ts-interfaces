@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from py_to_ts_interfaces.type_converting import python_to_typescript_type
 
@@ -10,10 +10,19 @@ class InterfaceField:
     is_nullable: bool
 
     def __init__(self, line: str):
-        self.is_nullable = line.endswith(" = None")
+        self.is_nullable = line.endswith(" = None") or "Union[" in line
         line = line.removesuffix(" = None")
 
-        self.name, self.python_type = line.strip().split(": ")
+        self.name, self.python_type = self.get_name_and_type(line)
+
+    @staticmethod
+    def get_name_and_type(line: str) -> Tuple[str, str]:
+        """Take a line like "field: Union[None, int]" and return ("field", "int")"""
+        name, python_type = line.strip().split(": ")
+        if "Union[" in python_type:
+            python_type = python_type.removeprefix("Union[None, ").removeprefix("Union[")
+            python_type = python_type.removesuffix("]").removesuffix(", None")
+        return name, python_type
 
     def get_typescript(self) -> str:
         """Return the field in typescript syntax (including indentation)."""
