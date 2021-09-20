@@ -5,7 +5,7 @@ from py_to_ts_interfaces.__main__ import python_to_typescript_folder
 
 PYTHON_DEFINITIONS = """from dataclasses import dataclass
 from enum import Enum
-from typing import Union
+from typing import Union, List
 
 
 class MyEnum(Enum):
@@ -44,8 +44,8 @@ export interface MyNullableInterface {
 }
 
 export interface MyInterface2 {
-    strangeType?: Array[number];
-    otherType: Array[string];
+    strangeType?: number[];
+    otherType: string[];
 }
 """
 

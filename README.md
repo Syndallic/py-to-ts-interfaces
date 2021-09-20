@@ -43,7 +43,7 @@ This script also supports nullable types (see `MyNullableInterface` in the secti
 ```python
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union
+from typing import Union, List
 
 
 class MyEnum(Enum):
@@ -58,6 +58,11 @@ class MyInterface:
 @dataclass(frozen=True)
 class MyNullableInterface:
     field: Union[MyInterface, None] = None
+    
+@dataclass(frozen=True)
+class MyInterface2:
+    strange_type: Union[List[int], None]
+    other_type: List[str]
 
 ```
 
@@ -84,6 +89,10 @@ export interface MyInterface {
 export interface MyNullableInterface {
     field?: MyInterface;
 }
+
+export interface MyInterface2 {
+    strangeType?: number[];
+    otherType: string[];
 ```
 
 ## Supported Type Mappings
