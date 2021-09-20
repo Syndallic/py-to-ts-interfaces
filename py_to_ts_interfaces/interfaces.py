@@ -1,6 +1,7 @@
 from typing import List, Tuple
 
 from py_to_ts_interfaces.type_converting import python_to_typescript_type
+from py_to_ts_interfaces.utils import to_camel_case
 
 
 class InterfaceField:
@@ -17,8 +18,9 @@ class InterfaceField:
 
     @staticmethod
     def get_name_and_type(line: str) -> Tuple[str, str]:
-        """Take a line like "field: Union[None, int]" and return ("field", "int")"""
+        """Take a line like "field_name: Union[None, int]" and return ("fieldName", "int")"""
         name, python_type = line.strip().split(": ")
+        name = to_camel_case(name)
         if "Union[" in python_type:
             python_type = python_type.removeprefix("Union[None, ").removeprefix("Union[")
             python_type = python_type.removesuffix("]").removesuffix(", None")

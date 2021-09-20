@@ -44,8 +44,8 @@ export interface MyNullableInterface {
 }
 
 export interface MyInterface2 {
-    strange_type: Array[number];
-    other_type: Array[string];
+    strangeType?: Array[number];
+    otherType: Array[string];
 }
 """
 
