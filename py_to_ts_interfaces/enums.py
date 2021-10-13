@@ -27,7 +27,7 @@ class EnumDefinition:
 
     def get_typescript(self) -> str:
         """Return the enum in typescript syntax (including indentation)."""
-        typescript_string = "enum {0} {{\n".format(self.name)
+        typescript_string = "export enum {0} {{\n".format(self.name)
         for element in self.elements:
             typescript_string += "{}\n".format(element.get_typescript())
         typescript_string += "}"

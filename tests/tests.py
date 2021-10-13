@@ -28,7 +28,7 @@ class MyInterface2:
     
 """
 
-TYPESCRIPT_DEFINITIONS = """enum MyEnum {
+TYPESCRIPT_DEFINITIONS = """export enum MyEnum {
     FIRST = 'Number One',
     SECOND = 'Number Two',
 }

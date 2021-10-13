@@ -75,7 +75,7 @@ $ py-ts-interfaces example_folder output_folder
 
 3. The resulting file will look like this:
 ```typescript
-enum MyEnum {
+export enum MyEnum {
     FIRST = 'Number One',
     SECOND = 'Number Two',
 }
