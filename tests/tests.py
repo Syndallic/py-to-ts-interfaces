@@ -48,7 +48,10 @@ export interface MyInterface2 {
 """
 
 
+# pylint: disable=no-self-use
 class TestPyToTsInterfaces:
+    """Tests for this module"""
+
     def test_success(self):
         """Primitive 'catch-all' test."""
 
