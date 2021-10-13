@@ -28,9 +28,7 @@ class MyInterface2:
     
 """
 
-TYPESCRIPT_DEFINITIONS = """/* eslint-disable @typescript-eslint/no-unused-vars */
-
-enum MyEnum {
+TYPESCRIPT_DEFINITIONS = """enum MyEnum {
     FIRST = 'Number One',
     SECOND = 'Number Two',
 }

@@ -35,10 +35,12 @@ def python_to_typescript_file(python_code: str) -> str:
             processed_definitions.append(InterfaceDefinition(definition))
 
     # construct final output
-    typescript_output = "/* eslint-disable @typescript-eslint/no-unused-vars */\n"
+    typescript_output = ""
     for processed_definition in processed_definitions:
-        typescript_output += "\n{}\n".format(processed_definition.get_typescript())
-    typescript_output.strip("\n")
+        typescript_output += "{}\n\n".format(processed_definition.get_typescript())
+    typescript_output = typescript_output.strip("\n")
+    # add just one newline at the end
+    typescript_output += "\n"
 
     return typescript_output
 
