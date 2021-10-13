@@ -52,6 +52,8 @@ export interface MyInterface2 {
 
 class TestPyToTsInterfaces:
     def test_success(self):
+        """Primitive 'catch-all' test."""
+
         input_path = "temp_testing"
         output_path = "temp_testing_2"
 
@@ -68,4 +70,9 @@ class TestPyToTsInterfaces:
         shutil.rmtree(input_path)
         shutil.rmtree(output_path)
 
-        assert output == TYPESCRIPT_DEFINITIONS
+        output_split = output.split("\n")
+        expected_split = TYPESCRIPT_DEFINITIONS.split("\n")
+        print("\n\nOutput:\n\"{}\"".format(output))
+
+        for i in range(max(len(output_split), len(expected_split))):
+            assert output_split[i] == expected_split[i]
