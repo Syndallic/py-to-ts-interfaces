@@ -12,6 +12,9 @@ class MyEnum(Enum):
     FIRST = "Number One"
     SECOND = "Number Two"
 
+    def __str__(self):
+        return self.value
+
 
 @dataclass(frozen=True)
 class MyInterface:

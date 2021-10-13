@@ -22,6 +22,11 @@ class EnumDefinition:
     elements: List[EnumElement]
 
     def __init__(self, definition: List[str]):
+        definition = [line for line in definition if
+                      not line.startswith("    def") and
+                      not line.startswith("        ")
+                      ]
+
         self.name = definition[0].removeprefix("class ").removesuffix("(Enum):")
         self.elements = [EnumElement(line) for line in definition[1:]]
 

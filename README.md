@@ -30,11 +30,13 @@ definition sets, and more importantly, bugs caused by forgetting to update both 
 This script takes a single input folder, and requires that all python files inside only contain the following:
 - Module imports
 - Newlines
+- Spaces
 - [Dataclasses](https://docs.python.org/3/library/dataclasses.html)
 - Enums
 
 If a dataclass contains an enum, the enum definition must be in the same folder also. 
 This script also supports nullable types (see `MyNullableInterface` in the section below).
+Functions in Enum definitions will be ignored (e.g. a `__str__` override).
 
 ### Example
 
@@ -49,6 +51,9 @@ from typing import Union, List
 class MyEnum(Enum):
     FIRST = "Number One"
     SECOND = "Number Two"
+
+    def __str__(self):
+        return self.value
 
 
 @dataclass(frozen=True)
