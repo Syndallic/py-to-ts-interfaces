@@ -1,3 +1,5 @@
+# Manually supporting dict types scales pretty badly, so the python_to_typescript_type function handles them
+# programmatically for the sake of sanity.
 python_to_typescript_type_map = {
     "str": "string",
     "int": "number",
@@ -20,5 +22,13 @@ def python_to_typescript_type(python_type: str) -> str:
     try:
         return python_to_typescript_type_map[python_type]
     except KeyError:
-        # This should mean it is an enum
-        return python_type
+        if python_type.startswith("Dict["):
+            python_type = python_type.removeprefix("Dict[").removesuffix("]").replace(" ", "")
+            # This part handles nested dicts
+            py_type_1, py_type_2 = python_type.split(",", 1)
+            ts_type_1 = python_to_typescript_type(py_type_1)
+            ts_type_2 = python_to_typescript_type(py_type_2)
+            return f"Record<{ts_type_1}, {ts_type_2}>"
+        else:
+            # This should mean it is an enum
+            return python_type

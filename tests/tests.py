@@ -28,6 +28,7 @@ class MyNullableInterface:
 class MyInterface2:
     strange_type: Union[List[int], None]
     other_type: List[str]
+    dict_type: Dict[int, Dict[str, MyEnum]]
     
 """
 
@@ -47,6 +48,7 @@ export interface MyNullableInterface {
 export interface MyInterface2 {
     strangeType?: number[];
     otherType: string[];
+    dictType: Record<number, Record<string, MyEnum>>;
 }
 """
 

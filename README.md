@@ -45,7 +45,7 @@ Functions in Enum definitions will be ignored (e.g. a `__str__` override).
 ```python
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union, List
+from typing import Union, List, Dict
 
 
 class MyEnum(Enum):
@@ -55,7 +55,7 @@ class MyEnum(Enum):
     def __str__(self):
         return self.value
 
-
+ 
 @dataclass(frozen=True)
 class MyInterface:
     field: MyEnum
@@ -68,6 +68,7 @@ class MyNullableInterface:
 class MyInterface2:
     strange_type: Union[List[int], None]
     other_type: List[str]
+    dict_type: Dict[int, Dict[str, MyEnum]]
 
 ```
 
@@ -96,6 +97,8 @@ export interface MyNullableInterface {
 export interface MyInterface2 {
     strangeType?: number[];
     otherType: string[];
+    dictType: Record<number, Record<string, MyEnum>>;
+
 ```
 
 ## Supported Type Mappings
@@ -107,5 +110,8 @@ export interface MyInterface2 {
 | float                           | number                        |
 | complex                         | number                        |
 | bool                            | boolean                       |
-| List[int]                       | number[]                    |
-| List[str]                       | string[]                   |
+| List[int]                       | number[]                      |
+| List[str]                       | string[]                      |
+| Dict[T, P]                      | Record<T, P>                  |
+
+Where T and P are one of the listed supported types (this includes nested Dicts), or enums. 
