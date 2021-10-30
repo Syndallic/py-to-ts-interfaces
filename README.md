@@ -107,5 +107,5 @@ export interface MyInterface2 {
 | float                           | number                        |
 | complex                         | number                        |
 | bool                            | boolean                       |
-| List[int]                       | Array[int]                    |
-| List[str]                       | Array[str]                    |
+| List[int]                       | number[]                    |
+| List[str]                       | string[]                   |

@@ -3,9 +3,9 @@ python_to_typescript_type_map = {
     "int": "number",
     "float": "number",
     "complex": "number",
-    "bool": "bool",
+    "bool": "boolean",
     "List[int]": "number[]",
-    "List[str]": "string[]"
+    "List[str]": "string[]",
 }
 
 
