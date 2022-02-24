@@ -6,6 +6,8 @@ import argparse
 from py_to_ts_interfaces.enums import EnumDefinition
 from py_to_ts_interfaces.file_io import write_file, read_file
 from py_to_ts_interfaces.interfaces import InterfaceDefinition
+from py_to_ts_interfaces.strings import StringDefinition
+from py_to_ts_interfaces.utils import is_class_definition, is_string_definition
 
 
 def python_to_typescript_file(python_code: str) -> str:
@@ -22,22 +24,29 @@ def python_to_typescript_file(python_code: str) -> str:
     # group the lines for each enum/class definition together
     definition_groups: list[list[str]] = []
     for line in lines:
-        if line.startswith("class "):
+        if is_class_definition(line) or is_string_definition(line):
             definition_groups.append([])
         definition_groups[-1].append(line)
 
     # convert each group into either an EnumDefinition or InterfaceDefinition object
-    processed_definitions: list[Union[EnumDefinition, InterfaceDefinition]] = []
+    processed_definitions: list[Union[EnumDefinition, InterfaceDefinition, StringDefinition]] = []
     for definition in definition_groups:
         if definition[0].endswith("(Enum):"):
             processed_definitions.append(EnumDefinition(definition))
+        elif definition[0].endswith("\""):
+            processed_definitions.append(StringDefinition(definition))
         else:
             processed_definitions.append(InterfaceDefinition(definition))
 
     # construct final output
     typescript_output = ""
-    for processed_definition in processed_definitions:
-        typescript_output += "{}\n\n".format(processed_definition.get_typescript())
+    for i, processed_definition in enumerate(processed_definitions):
+        typescript_output += "{}\n".format(processed_definition.get_typescript())
+        # Want consecutive string definitions to be next to each other
+        if not (len(processed_definitions) >= i + 1 and
+                isinstance(processed_definition, StringDefinition) and
+                isinstance(processed_definitions[i + 1], StringDefinition)):
+            typescript_output += "\n"
     typescript_output = typescript_output.strip("\n")
     # add just one newline at the end
     typescript_output += "\n"

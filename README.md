@@ -33,6 +33,7 @@ This script takes a single input folder, and requires that all python files insi
 - Spaces
 - [Dataclasses](https://docs.python.org/3/library/dataclasses.html)
 - Enums
+- String definitions
 
 If a dataclass contains an enum, the enum definition must be in the same folder also. 
 This script also supports nullable types (see `MyNullableInterface` in the section below).
@@ -45,7 +46,7 @@ Functions in Enum definitions will be ignored (e.g. a `__str__` override).
 ```python
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union, List, Dict
+from typing import Final, Union, List, Dict
 
 
 class MyEnum(Enum):
@@ -55,6 +56,8 @@ class MyEnum(Enum):
     def __str__(self):
         return self.value
 
+CONSTANT_STRING: Final = "example"
+OTHER_STRING = "another example"
  
 @dataclass(frozen=True)
 class MyInterface:
@@ -85,6 +88,9 @@ export enum MyEnum {
     FIRST = 'Number One',
     SECOND = 'Number Two',
 }
+
+export const CONSTANT_STRING = 'example';
+export const OTHER_STRING = 'another example';
 
 export interface MyInterface {
     field: MyEnum;

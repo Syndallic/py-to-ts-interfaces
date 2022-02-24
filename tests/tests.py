@@ -5,8 +5,7 @@ from py_to_ts_interfaces.__main__ import python_to_typescript_folder
 
 PYTHON_DEFINITIONS = """from dataclasses import dataclass
 from enum import Enum
-from typing import Union, List
-
+from typing import Final, Union, List, Dict
 
 class MyEnum(Enum):
     FIRST = "Number One"
@@ -15,6 +14,8 @@ class MyEnum(Enum):
     def __str__(self):
         return self.value
 
+CONSTANT_STRING: Final = "example"
+OTHER_STRING = "another example"
 
 @dataclass(frozen=True)
 class MyInterface:
@@ -36,6 +37,9 @@ TYPESCRIPT_DEFINITIONS = """export enum MyEnum {
     FIRST = 'Number One',
     SECOND = 'Number Two',
 }
+
+export const CONSTANT_STRING = 'example';
+export const OTHER_STRING = 'another example';
 
 export interface MyInterface {
     field: MyEnum;
