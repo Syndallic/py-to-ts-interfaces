@@ -24,10 +24,11 @@ class MyInterface:
 @dataclass(frozen=True)
 class MyNullableInterface:
     field: Union[MyInterface, None] = None
+    otherField: Optional[MyInterface] = None
     
 @dataclass(frozen=True)
 class MyInterface2:
-    strange_type: Union[List[int], None]
+    strange_type: Optional[List[int]]
     other_type: List[str]
     dict_type: Dict[int, Dict[str, MyEnum]]
     
@@ -47,6 +48,7 @@ export interface MyInterface {
 
 export interface MyNullableInterface {
     field?: MyInterface;
+    otherField?: MyInterface;
 }
 
 export interface MyInterface2 {

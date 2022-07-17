@@ -11,7 +11,7 @@ class InterfaceField:
     is_nullable: bool
 
     def __init__(self, line: str):
-        self.is_nullable = line.endswith(" = None") or "Union[" in line
+        self.is_nullable = line.endswith(" = None") or "Union[" in line or "Optional[" in line
         line = line.removesuffix(" = None")
 
         self.name, self.python_type = self.get_name_and_type(line)
@@ -23,6 +23,9 @@ class InterfaceField:
         name = to_camel_case(name)
         if "Union[" in python_type:
             python_type = python_type.removeprefix("Union[None, ").removeprefix("Union[")
+            python_type = python_type.removesuffix("]").removesuffix(", None")
+        if "Optional[" in python_type:
+            python_type = python_type.removeprefix("Optional[")
             python_type = python_type.removesuffix("]").removesuffix(", None")
         return name, python_type
 

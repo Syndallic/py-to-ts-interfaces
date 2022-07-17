@@ -46,8 +46,7 @@ Functions in Enum definitions will be ignored (e.g. a `__str__` override).
 ```python
 from dataclasses import dataclass
 from enum import Enum
-from typing import Final, Union, List, Dict
-
+from typing import Final, Union, List, Dict, Optional
 
 class MyEnum(Enum):
     FIRST = "Number One"
@@ -58,7 +57,7 @@ class MyEnum(Enum):
 
 CONSTANT_STRING: Final = "example"
 OTHER_STRING = "another example"
- 
+
 @dataclass(frozen=True)
 class MyInterface:
     field: MyEnum
@@ -66,10 +65,11 @@ class MyInterface:
 @dataclass(frozen=True)
 class MyNullableInterface:
     field: Union[MyInterface, None] = None
+    otherField: Optional[MyInterface] = None
     
 @dataclass(frozen=True)
 class MyInterface2:
-    strange_type: Union[List[int], None]
+    strange_type: Optional[List[int]]
     other_type: List[str]
     dict_type: Dict[int, Dict[str, MyEnum]]
 
@@ -98,12 +98,14 @@ export interface MyInterface {
 
 export interface MyNullableInterface {
     field?: MyInterface;
+    otherField?: MyInterface;
 }
 
 export interface MyInterface2 {
     strangeType?: number[];
     otherType: string[];
     dictType: Record<number, Record<string, MyEnum>>;
+}
 
 ```
 
