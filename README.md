@@ -111,15 +111,14 @@ export interface MyInterface2 {
 
 ## Supported Type Mappings
 
-| Python                          | Typescript                    |
-|:-------------------------------:|:-----------------------------:|
-| str                             | string                        |
-| int                             | number                        |
-| float                           | number                        |
-| complex                         | number                        |
-| bool                            | boolean                       |
-| List[int]                       | number[]                      |
-| List[str]                       | string[]                      |
-| Dict[T, P]                      | Record<T, P>                  |
+|    Python    |  Typescript  |
+|:------------:|:------------:|
+|     str      |    string    |
+|     int      |    number    |
+|    float     |    number    |
+|   complex    |    number    |
+|     bool     |   boolean    |
+|   List[T]    |     T[]      |
+|  Dict[T, P]  | Record<T, P> |
 
 Where T and P are one of the listed supported types (this includes nested Dicts), or enums. 

@@ -20,6 +20,7 @@ OTHER_STRING = "another example"
 @dataclass(frozen=True)
 class MyInterface:
     field: MyEnum
+    otherField: List[MyEnum]
     
 @dataclass(frozen=True)
 class MyNullableInterface:
@@ -44,6 +45,7 @@ export const OTHER_STRING = 'another example';
 
 export interface MyInterface {
     field: MyEnum;
+    otherField: MyEnum[];
 }
 
 export interface MyNullableInterface {

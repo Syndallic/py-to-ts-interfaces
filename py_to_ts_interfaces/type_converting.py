@@ -6,8 +6,11 @@ python_to_typescript_type_map = {
     "float": "number",
     "complex": "number",
     "bool": "boolean",
-    "List[int]": "number[]",
     "List[str]": "string[]",
+    "List[int]": "number[]",
+    "List[float]": "number[]",
+    "List[complex]": "number[]",
+    "List[bool]": "boolean[]",
 }
 
 
@@ -29,6 +32,10 @@ def python_to_typescript_type(python_type: str) -> str:
             ts_type_1 = python_to_typescript_type(py_type_1)
             ts_type_2 = python_to_typescript_type(py_type_2)
             return f"Record<{ts_type_1}, {ts_type_2}>"
+        elif python_type.startswith("List["):
+            # This means the list contains an unknown type - likely an enum
+            python_type = python_type.removeprefix("List[").removesuffix("]")
+            return f"{python_type}[]"
         else:
             # This should mean it is an enum
             return python_type
